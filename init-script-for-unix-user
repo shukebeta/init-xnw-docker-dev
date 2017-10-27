@@ -8,5 +8,15 @@ cd ${CURRENT_DIR}
 git clone ssh://git@gitlab.xnwimg.com:8044/shukebeta/docker-xnw-dev.git 
 cd docker-xnw-dev && docker-compose up -d
 
+echo '请输入你的登录密码，以允许脚本为你安装控制台脚本'
+
 sudo cp bin/gotoc /usr/local/bin 
-sudo echo 127.0.0.1 xnwdev.com www.xnwdev.com org.xnwdev.com api.xnwdev.com >> /etc/hosts
+sudo bash -c 'echo -e 127.0.0.1 xnwdev.com www.xnwdev.com org.xnwdev.com api.xnwdev.com >> /etc/hosts'
+
+echo '现在为你添加常用git别名'
+git config --global alias.st status
+git config --global alias.ci commit
+git config --global alias.co checkout
+git config --global alias.br branch
+
+echo 'setup 完成，接下来请使用 gotoc 脚本进入容器，执行初始化数据库脚本'
