@@ -1,0 +1,12 @@
+#!/bin/bash
+  
+CURRENT_DIR=`pwd`
+mkdir -p ${CURRENT_DIR}/data/t && cd ${CURRENT_DIR}/data/t
+git clone ssh://git@gitlab.xnwimg.com:8044/WEB/xnw.git
+cd xnw && git checkout alpha
+cd ${CURRENT_DIR}
+git clone ssh://git@gitlab.xnwimg.com:8044/shukebeta/docker-xnw-dev.git 
+cd docker-xnw-dev && docker-compose up -d
+
+sudo cp bin/gotoc /usr/local/bin 
+sudo echo 127.0.0.1 xnwdev.com www.xnwdev.com org.xnwdev.com api.xnwdev.com >> /etc/hosts
