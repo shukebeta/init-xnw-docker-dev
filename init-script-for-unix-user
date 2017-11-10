@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -exu
   
 CURRENT_DIR=`pwd`
 mkdir -p ${CURRENT_DIR}/data/t && cd ${CURRENT_DIR}/data/t
@@ -10,7 +10,7 @@ cd docker-xnw-dev && docker-compose up -d
 
 echo '请输入你的登录密码，以允许脚本为你安装控制台脚本'
 
-sudo cp bin/gotoc /usr/local/bin 
+sudo cp bin/{gotoc,init-xnw-db} /usr/local/bin 
 sudo bash -c 'echo -e 127.0.0.1 xnwdev.com www.xnwdev.com org.xnwdev.com api.xnwdev.com >> /etc/hosts'
 
 echo '现在为你添加常用git别名'
@@ -19,4 +19,5 @@ git config --global alias.ci commit
 git config --global alias.co checkout
 git config --global alias.br branch
 
-echo 'setup 完成，接下来请使用 gotoc 脚本进入容器，执行初始化数据库脚本'
+echo 'setup 完成，接下来自动进入容器，执行初始化数据库脚本，请稍等... '
+init-xnw-db
