@@ -10,7 +10,7 @@ cd docker-xnw-dev && docker-compose up -d
 
 echo '请输入你的登录密码，以允许脚本为你安装控制台脚本'
 
-sudo cp bin/{gotoc,init-xnw-db} /usr/local/bin 
+sudo cp bin/{gotoc,init-xnw-db,xnwup} /usr/local/bin 
 sudo bash -c 'echo -e 127.0.0.1 xnwdev.com www.xnwdev.com org.xnwdev.com api.xnwdev.com >> /etc/hosts'
 sudo defaults write com.apple.loginwindow LoginHook ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
 
