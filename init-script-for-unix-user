@@ -2,7 +2,7 @@
   
 CURRENT_DIR=`pwd`
 echo $CURRENT_DIR > ~/.docker-xnw-dev
-mkdir -p ${CURRENT_DIR}/data/{t,logs} && cd ${CURRENT_DIR}/data/t
+mkdir -p ${CURRENT_DIR}/data/{t,logs,xdebug_output} && cd ${CURRENT_DIR}/data/t
 git clone ssh://git@gitlab.xnwimg.com:8044/WEB/xnw.git
 cd xnw && git checkout alpha
 cd ${CURRENT_DIR}
