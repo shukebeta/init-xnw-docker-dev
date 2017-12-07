@@ -7,13 +7,17 @@ git clone ssh://git@gitlab.xnwimg.com:8044/WEB/xnw.git
 cd xnw && git checkout alpha
 cd ${CURRENT_DIR}
 git clone ssh://git@gitlab.xnwimg.com:8044/shukebeta/docker-xnw-dev.git 
-cd docker-xnw-dev && docker-compose up -d
+cd docker-xnw-dev
 
 echo '请输入你的登录密码，以允许脚本为你安装控制台脚本'
 
 sudo cp bin/{gotoc,init-xnw-db,init-dev,init-local} /usr/local/bin 
 sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/xnwup /usr/local/bin/xnwup
 sudo bash -c 'echo -e 127.0.0.1 ddev.xnw.com org-ddev.xnw.com api-ddev.xnw.com >> /etc/hosts'
+init-local
+
+docker-compose up -d
+
 # sudo defaults write com.apple.loginwindow LoginHook ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
 sudo ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
 
