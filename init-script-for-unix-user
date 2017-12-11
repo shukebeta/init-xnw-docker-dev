@@ -15,10 +15,12 @@ if [ "${os}" = "Linux" ]; then
 fi
 
 CURRENT_DIR=`pwd`
+
 echo $CURRENT_DIR > ~/.docker-xnw-dev
 mkdir -p ${CURRENT_DIR}/data/{t,logs,xdebug_output} && cd ${CURRENT_DIR}/data/t
 git clone ssh://git@gitlab.xnwimg.com:8044/WEB/xnw.git
 cd xnw && git checkout alpha
+
 cd ${CURRENT_DIR}
 git clone ssh://git@gitlab.xnwimg.com:8044/shukebeta/docker-xnw-dev.git
 cd docker-xnw-dev
@@ -26,7 +28,11 @@ cd docker-xnw-dev
 echo '请输入你的登录密码，以允许脚本为你安装控制台脚本'
 
 if [ -f /usr/local/bin/xnwup ]; then
-    sudo rm /usr/local/bin/{xnwup,gotoc,init-xnw-db,init-dev,init-local}
+    sudo unlink /usr/local/bin/xnwup
+fi
+
+if [ -f /usr/local/bin/init-xnw-db ]; then
+    sudo unlink /usr/local/bin/init-xnw-db
 fi
 
 sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/xnwup /usr/local/bin/xnwup
@@ -46,4 +52,5 @@ git config --global alias.co checkout
 git config --global alias.br branch
 
 echo 'setup 完成，接下来自动进入容器，执行初始化数据库脚本，请稍等... '
+sleep 5
 init-xnw-db
