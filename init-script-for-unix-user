@@ -45,6 +45,7 @@ fi
 
 sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/xnwup /usr/local/bin/xnwup
 sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/init-xnw-db /usr/local/bin/init-xnw-db
+sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/init-local /usr/local/bin/init-local
 sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/gotoc /usr/local/bin/gotoc
 
 sudo bash -c 'echo -e 127.0.0.1 ddev.xnw.com org-ddev.xnw.com ssl.xnw.com >> /etc/hosts'
