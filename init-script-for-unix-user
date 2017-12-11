@@ -35,6 +35,9 @@ if [ -f /usr/local/bin/init-xnw-db ]; then
     sudo unlink /usr/local/bin/init-xnw-db
 fi
 
+if [ -f /usr/local/bin/init-local ]; then
+    sudo unlink /usr/local/bin/init-local
+fi
 
 if [ -f /usr/local/bin/gotoc ]; then
     sudo unlink /usr/local/bin/gotoc
