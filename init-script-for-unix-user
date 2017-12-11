@@ -1,22 +1,40 @@
 #!/bin/bash -exu
-  
+
+os=`uname -s`
+
+if [ "${os}" = "Linux" ]; then
+    # 检查当前用户是否在 docker 组
+    in_docker_group=`id|grep docker`
+    if [ "$in_docker_group" = "" ]; then
+        echo "请执行以下命令把当前用户加入到 docker 组，然后再执行本命令，加入docker组可使用以下命令："
+        echo "sudo usermod -aG docker `whoami`"
+        echo "重新登录并再次执行本程序可使用下面的命令(问密码时输入当前用户密码）："
+        echo "su - `whoami` && ./$0"
+        exit
+    fi
+fi
+
 CURRENT_DIR=`pwd`
 echo $CURRENT_DIR > ~/.docker-xnw-dev
 mkdir -p ${CURRENT_DIR}/data/{t,logs,xdebug_output} && cd ${CURRENT_DIR}/data/t
 git clone ssh://git@gitlab.xnwimg.com:8044/WEB/xnw.git
 cd xnw && git checkout alpha
 cd ${CURRENT_DIR}
-git clone ssh://git@gitlab.xnwimg.com:8044/shukebeta/docker-xnw-dev.git 
+git clone ssh://git@gitlab.xnwimg.com:8044/shukebeta/docker-xnw-dev.git
 cd docker-xnw-dev
 
 echo '请输入你的登录密码，以允许脚本为你安装控制台脚本'
 
-sudo cp bin/{gotoc,init-xnw-db,init-dev,init-local} /usr/local/bin 
-sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/xnwup /usr/local/bin/xnwup
-sudo bash -c 'echo -e 127.0.0.1 ddev.xnw.com org-ddev.xnw.com api-ddev.xnw.com >> /etc/hosts'
-init-local
+if [ -f /usr/local/bin/xnwup ]; then
+    sudo rm /usr/local/bin/{xnwup,gotoc,init-xnw-db,init-dev,init-local}
+fi
 
-docker-compose up -d
+sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/xnwup /usr/local/bin/xnwup
+sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/init-xnw-db /usr/local/bin/init-xnw-db
+
+sudo bash -c 'echo -e 127.0.0.1 ddev.xnw.com org-ddev.xnw.com api-ddev.xnw.com >> /etc/hosts'
+
+${CURRENT_DIR}/docker-xnw-dev/bin/init-local
 
 # sudo defaults write com.apple.loginwindow LoginHook ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
 sudo ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
