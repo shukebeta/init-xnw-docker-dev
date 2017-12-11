@@ -52,8 +52,12 @@ sudo bash -c 'echo -e 127.0.0.1 ddev.xnw.com org-ddev.xnw.com ssl.xnw.com >> /et
 
 ${CURRENT_DIR}/docker-xnw-dev/bin/init-local
 
-# sudo defaults write com.apple.loginwindow LoginHook ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
 sudo ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
+if [ "${os}" = "Linux" ]; then
+    sudo bash -c "echo ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias >> /etc/rc.local"
+else
+    sudo defaults write com.apple.loginwindow LoginHook ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
+fi
 
 echo '现在为你添加常用git别名'
 git config --global alias.st status
