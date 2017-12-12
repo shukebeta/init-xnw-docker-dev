@@ -45,12 +45,9 @@ fi
 
 sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/xnwup /usr/local/bin/xnwup
 sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/init-xnw-db /usr/local/bin/init-xnw-db
-sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/init-local /usr/local/bin/init-local
 sudo ln -s ${CURRENT_DIR}/docker-xnw-dev/bin/gotoc /usr/local/bin/gotoc
 
 sudo bash -c 'echo -e 127.0.0.1 ddev.xnw.com org-ddev.xnw.com ssl.xnw.com >> /etc/hosts'
-
-${CURRENT_DIR}/docker-xnw-dev/bin/init-local
 
 sudo ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
 if [ "${os}" = "Linux" ]; then
@@ -64,6 +61,8 @@ git config --global alias.st status
 git config --global alias.ci commit
 git config --global alias.co checkout
 git config --global alias.br branch
+
+xnwup 5.6
 
 echo 'setup 完成，接下来自动进入容器，执行初始化数据库脚本，请稍等... '
 sleep 5
