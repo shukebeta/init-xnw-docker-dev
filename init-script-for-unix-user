@@ -51,7 +51,9 @@ sudo bash -c 'echo -e 127.0.0.1 ddev.xnw.com org-ddev.xnw.com ssl.xnw.com >> /et
 
 sudo ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
 if [ "${os}" = "Linux" ]; then
+    sudo sed  -i '/exit 0/d' /etc/rc.local
     sudo bash -c "echo ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias >> /etc/rc.local"
+    sudo bash -c "echo exit 0 >> /etc/rc.local"
 else
     sudo defaults write com.apple.loginwindow LoginHook ${CURRENT_DIR}/docker-xnw-dev/bin/lo0-alias
 fi
